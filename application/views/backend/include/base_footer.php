@@ -1,7 +1,9 @@
 <footer class="sticky-footer bg-white">
 	<div class="container my-auto">
 		<div class="copyright text-center my-auto">
-			<span>&copy; <?= date('Y') ?> Bus Ticket Booking System - Developed by Bahyu Sanciko </span>
+			<span>
+				Bus Ticket Booking System Copyright © Evis 2023
+			</span>
 		</div>
 	</div>
 </footer>

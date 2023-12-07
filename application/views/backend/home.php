@@ -37,7 +37,7 @@
             <div class="row no-gutters align-items-center">
               <div class="col mr-2">
                 <div class="text-xs font-weight-bold text-info text-uppercase mb-1"><a
-                    href="<?= base_url('backend/order') ?>">Pemesanan Tertunda</a></div>
+                    href="<?= base_url('backend/order') ?>">Pesanan Tertunda</a></div>
                 <div class="h5 mb-0 font-weight-bold text-gray-800">
                   <?= $order[0]['count(kd_order)']; ?>
                 </div>
@@ -129,7 +129,7 @@
                 <div class="text-xs font-weight-bold text-success text-uppercase mb-1"><a
                     href="<?= base_url('backend/jadwal') ?>">Jadwal yang Tersedia</a></div>
                 <div class="h5 mb-0 font-weight-bold text-gray-800">
-                  <?= $schedules[0]['count(kd_jadwal)']; ?>
+                  <?= $jadwal[0]['count(kd_jadwal)']; ?>
                 </div>
               </div>
               <div class="col-auto">

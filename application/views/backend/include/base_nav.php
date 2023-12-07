@@ -9,7 +9,7 @@
       <div class="sidebar-brand-icon rotate-n-15">
         <i class="fas fa-bus"></i>
       </div>
-      <div class="sidebar-brand-text mx-3">ALMASAR CI</div>
+      <div class="sidebar-brand-text mx-3">ALMASAR</div>
     </a>
 
     <!-- Divider -->
@@ -25,7 +25,7 @@
         <span>Manajemen Bus</span></a>
       <a class="nav-link" href="<?= base_url() ?>backend/rute">
         <i class="fas fa fa-compass"></i>
-        <span>Manajemen Terminal</span></a>
+        <span>Manajemen Tujuan</span></a>
       <a class="nav-link" href="<?= base_url() ?>backend/jadwal">
         <i class="fas fa fa-clipboard-list"></i>
         <span>Manajemen Jadwal</span></a>
@@ -34,11 +34,11 @@
         <span>Daftar Pesanan</span></a>
       <a class="nav-link" href="<?= base_url() ?>backend/tiket">
         <i class="fas fa-ticket-alt"></i>
-        <span>Tiket</span></a>
+        <span>Daftar Tiket</span></a>
       <a class="nav-link" href="<?= base_url() ?>backend/konfirmasi">
         <i class="fa fa-dollar-sign"></i>
         <span>Daftar Pembayaran</span></a>
-      <?php if($this->session->userdata('level') == '1') { ?>
+      <?php if ($this->session->userdata('level') == '1') { ?>
         <a class="nav-link" href="<?= base_url() ?>backend/bank">
           <i class="fas fa fa-piggy-bank"></i>
           <span>Daftar Bank</span></a>
@@ -54,8 +54,8 @@
         </a>
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
           <div class="bg-white py-2 collapse-inner rounded">
-            <a class="collapse-item" href="<?= base_url('backend/pelanggan') ?>">Customer List</a>
-            <a class="collapse-item" href="<?= base_url() ?>backend/admin">Administrator</a>
+            <a class="collapse-item" href="<?= base_url('backend/pelanggan') ?>">List Pelanggan</a>
+            <a class="collapse-item" href="<?= base_url() ?>backend/admin">List Admin</a>
           </div>
         </div>
       </li>

@@ -52,14 +52,14 @@
 									</thead>
 									<tbody>
 										<?php $i = 1;
-										foreach($tiket as $row) { ?>
+										foreach ($tiket as $row) { ?>
 											<tr>
-												<?php $now = hari_indo(date('N', strtotime($row['tgl_berangkat_order']))).', '.tanggal_indo(date('Y-m-d', strtotime(''.$row['tgl_berangkat_order'].''))).', '.date('H:i', strtotime($row['jam_berangkat_jadwal'])); ?>
+												<?php $now = hari_indo(date('N', strtotime($row['tgl_berangkat_order']))) . ', ' . tanggal_indo(date('Y-m-d', strtotime('' . $row['tgl_berangkat_order'] . ''))) . ', ' . date('H:i', strtotime($row['jam_berangkat_jadwal'])); ?>
 												<th scope="row">
 													<?= $row['kd_tiket']; ?>
 												</th>
 												<td>
-													<?= $row['kd_jadwal']." [".$row['kd_bus'].']' ?>
+													<?= $row['kd_jadwal'] . " [" . $row['kd_bus'] . ']' ?>
 												</td>
 												<td>
 													<?= $now ?>
@@ -67,12 +67,12 @@
 												<td>
 													<?= $row['no_kursi_order']; ?>
 												</td>
-												<td>$
+												<td>Rp
 													<?= $row['harga_jadwal']; ?>
 												</td>
 											</tr>
 										<?php } ?>
-										<td colspan="5"> <b class="pull-right">Total $
+										<td colspan="5"> <b class="pull-right">Total Rp
 												<?php $total = $count * $tiket[0]['harga_jadwal'];
 												echo $total ?>
 											</b></td>
@@ -96,7 +96,7 @@
 								<p id="expired"></p>
 							</h1>
 							<p>(Sebelum
-								<?php $expired = hari_indo(date('N', strtotime($tiket[0]['expired_order']))).', '.tanggal_indo(date('Y-m-d', strtotime(''.$tiket[0]['expired_order'].''))).', '.date('H:i', strtotime($tiket[0]['expired_order']));
+								<?php $expired = hari_indo(date('N', strtotime($tiket[0]['expired_order']))) . ', ' . tanggal_indo(date('Y-m-d', strtotime('' . $tiket[0]['expired_order'] . ''))) . ', ' . date('H:i', strtotime($tiket[0]['expired_order']));
 								echo $expired; ?>)
 							</p>
 							<hr>
@@ -108,13 +108,13 @@
 							<div class="offset-lg-1 col-lg-10 offset-sm-0 col-sm-12">
 								<div class="row">
 									<div class="col-md-3 col-4 mb-xs-10 pr-xs-0">
-										<img src="<?= base_url().$tiket[0]['photo_bank'] ?>" height="50" width="150" />
+										<img src="<?= base_url() . $tiket[0]['photo_bank'] ?>" height="50" width="150" />
 									</div>
 									<div class="col-md-6 col-8 mb-xs-10 rekening-text">
 										<p><input type="hidden" name="" id="myInput"
 												value="<?= $tiket[0]['nomrek_bank']; ?> of <?= $tiket[0]['nama_bank'] ?>">
 										<h4 id="myInput">
-											<?= number_format((float)($tiket[0]['nomrek_bank']), 0, "-", "-"); ?> of
+											<?= number_format((float) ($tiket[0]['nomrek_bank']), 0, "-", "-"); ?> of
 											<?= $tiket[0]['nama_bank'] ?>
 										</h4>
 										</p>
@@ -163,7 +163,7 @@
 									</div>
 								</div>
 							</div>
-							<a href="<?= base_url('tiket/konfirmasi/'.$tiket[0]['kd_order'].'/'.$total) ?>"
+							<a href="<?= base_url('tiket/konfirmasi/' . $tiket[0]['kd_order'] . '/' . $total) ?>"
 								class="btn btn-primary pull-center"> Kirim untuk Konfirmasi Pembayaran</a>
 						</div>
 					</div>
@@ -174,7 +174,7 @@
 	<!-- start footer Area -->
 	<?php $this->load->view('frontend/include/base_footer'); ?>
 	<!-- js -->
-	<?php $expired1 = tanggal_ing(date('Y-m-d', strtotime($tiket[0]['expired_order']))).', '.date('Y', strtotime($tiket[0]['expired_order'])).' '.date('H:i', strtotime($tiket[0]['expired_order'])) ?>
+	<?php $expired1 = tanggal_ing(date('Y-m-d', strtotime($tiket[0]['expired_order']))) . ', ' . date('Y', strtotime($tiket[0]['expired_order'])) . ' ' . date('H:i', strtotime($tiket[0]['expired_order'])) ?>
 	<script>
 		function myFunction() {
 			var copyText = document.getElementById("myInput");

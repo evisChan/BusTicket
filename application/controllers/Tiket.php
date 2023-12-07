@@ -1,95 +1,104 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Tiket extends CI_Controller {
-	public function __construct() {
+class Tiket extends CI_Controller
+{
+	public function __construct()
+	{
 		parent::__construct();
 		$this->load->helper('tglindo_helper');
 		$this->load->model('getkod_model');
 		date_default_timezone_set("Asia/Jakarta");
 	}
-	function getsecurity($value = '') {
+	function getsecurity($value = '')
+	{
 		$username = $this->session->userdata('username');
-		if(empty($username)) {
+		if (empty($username)) {
 			redirect('login');
 		}
 	}
-	public function index() {
+	public function index()
+	{
 		$this->session->unset_userdata(array('jadwal', 'asal', 'tanggal'));
-		$data['title'] = "Check Schedule";
+		$data['title'] = "Cek Jadwal";
 		$data['asal'] = $this->db->query("SELECT * FROM `tbl_tujuan` ORDER BY kota_tujuan ASC ")->result_array();
 		$data['tujuan'] = $this->db->query("SELECT * FROM `tbl_tujuan` group by kota_tujuan ORDER BY kota_tujuan ASC ")->result_array();
 		$data['list'] = $this->db->query("SELECT * FROM `tbl_tujuan` ORDER BY kota_tujuan ASC ")->result_array();
 		$this->load->view('frontend/cektanggal', $data);
 	}
 	/* Log on to codeastro.com for more projects */
-	public function cektiket($value = '') {
+	public function cektiket($value = '')
+	{
 		$this->load->view('frontend/cektiket');
 	}
-	public function cekjadwal($tgl = '', $asl = '', $tjn = '') {
+	public function cekjadwal($tgl = '', $asl = '', $tjn = '')
+	{
 		$this->session->unset_userdata(array('jadwal', 'asal', 'tanggal'));
-		$data['title'] = 'Search Tickets';
-		$data['tanggal'] = $this->input->get('tanggal').$tgl;
-		$asal = $this->input->get('asal').$asl;
-		$tujuan = $this->input->get('tujuan').$tjn;
+		$data['title'] = 'Cari Tiket';
+		$data['tanggal'] = $this->input->get('tanggal') . $tgl;
+		$asal = $this->input->get('asal') . $asl;
+		$tujuan = $this->input->get('tujuan') . $tjn;
 		$data['asal'] = $this->db->query("SELECT * FROM tbl_tujuan
                WHERE kd_tujuan ='$asal'")->row_array();
 		$data['jadwal'] = $this->db->query("SELECT * FROM tbl_jadwal LEFT JOIN tbl_bus on tbl_jadwal.kd_bus = tbl_bus.kd_bus LEFT JOIN tbl_tujuan on tbl_jadwal.kd_tujuan = tbl_tujuan.kd_tujuan WHERE tbl_jadwal.wilayah_jadwal ='$tujuan' AND tbl_jadwal.kd_asal = '$asal'")->result_array();
-		if(!empty($data['jadwal'])) {
-			if($tujuan == $data['asal']['kota_tujuan']) {
+		if (!empty($data['jadwal'])) {
+			if ($tujuan == $data['asal']['kota_tujuan']) {
 				$this->session->set_flashdata('message', 'swal("Cek", "Tujuan dan Asal tidak boleh sama", "error");');
 				redirect('tiket');
 			} else {
-				for($i = 0; $i < count($data['jadwal']); $i++) {
-					$data['kursi'][$i] = $this->db->query("SELECT count(no_kursi_order) FROM tbl_order WHERE kd_jadwal = '".$data['jadwal'][$i]['kd_jadwal']."' AND tgl_berangkat_order = '".$data['tanggal']."' AND asal_order = '".$asal."'")->result_array();
+				for ($i = 0; $i < count($data['jadwal']); $i++) {
+					$data['kursi'][$i] = $this->db->query("SELECT count(no_kursi_order) FROM tbl_order WHERE kd_jadwal = '" . $data['jadwal'][$i]['kd_jadwal'] . "' AND tgl_berangkat_order = '" . $data['tanggal'] . "' AND asal_order = '" . $asal . "'")->result_array();
 				}
 				;
 				$this->load->view('frontend/cekjadwal', $data);
 			}
 		} else {
-			$this->session->set_flashdata('message', 'swal("Empty", "No Schedule", "error");');
+			$this->session->set_flashdata('message', 'swal("Empty", "Jadwal Kosong", "error");');
 			redirect('tiket');
 		}
 	}
 	/* Log on to codeastro.com for more projects */
-	public function beforebeli($jadwal = "", $asal = '', $tanggal = '') {
+	public function beforebeli($jadwal = "", $asal = '', $tanggal = '')
+	{
 		$array = array(
 			'jadwal' => $jadwal,
 			'asal' => $asal,
 			'tanggal' => $tanggal
 		);
 		$this->session->set_userdata($array);
-		if($this->session->userdata('username')) {
+		if ($this->session->userdata('username')) {
 			$id = $jadwal;
 			$asal = $asal;
 			$data['tanggal'] = $tanggal;
 			$data['asal'] = $this->db->query("SELECT * FROM tbl_tujuan
-               WHERE kd_tujuan ='".$asal."'")->row_array();
-			$data['jadwal'] = $this->db->query("SELECT * FROM tbl_jadwal LEFT JOIN tbl_bus on tbl_jadwal.kd_bus = tbl_bus.kd_bus LEFT JOIN tbl_tujuan on tbl_jadwal.kd_tujuan = tbl_tujuan.kd_tujuan WHERE kd_jadwal ='".$id."'")->row_array();
-			$data['kursi'] = $this->db->query("SELECT no_kursi_order FROM tbl_order WHERE kd_jadwal = '".$data['jadwal']['kd_jadwal']."' AND tgl_berangkat_order = '".$data['tanggal']."' AND asal_order = '".$asal."'")->result_array();
+               WHERE kd_tujuan ='" . $asal . "'")->row_array();
+			$data['jadwal'] = $this->db->query("SELECT * FROM tbl_jadwal LEFT JOIN tbl_bus on tbl_jadwal.kd_bus = tbl_bus.kd_bus LEFT JOIN tbl_tujuan on tbl_jadwal.kd_tujuan = tbl_tujuan.kd_tujuan WHERE kd_jadwal ='" . $id . "'")->row_array();
+			$data['kursi'] = $this->db->query("SELECT no_kursi_order FROM tbl_order WHERE kd_jadwal = '" . $data['jadwal']['kd_jadwal'] . "' AND tgl_berangkat_order = '" . $data['tanggal'] . "' AND asal_order = '" . $asal . "'")->result_array();
 			$this->load->view('frontend/beli_step1', $data);
 		} else {
 			redirect('login/autlogin');
 		}
 	}
-	public function afterbeli() {
+	public function afterbeli()
+	{
 		$data['kursi'] = $this->input->get('kursi');
 		$data['bank'] = $this->db->query("SELECT * FROM `tbl_bank` ")->result_array();
 		$data['kd_jadwal'] = $this->session->userdata('jadwal');
 		$data['asal'] = $this->session->userdata('asal');
 		$data['tglberangkat'] = $this->input->get('tgl');
-		if($data['kursi']) {
+		if ($data['kursi']) {
 			$this->load->view('frontend/beli_step2', $data);
 		} else {
 			$this->session->set_flashdata('message', 'swal("Empty", "Choose Your Seat", "error");');
-			redirect('tiket/beforebeli/'.$data['asal'].'/'.$data['kd_jadwal']);
+			redirect('tiket/beforebeli/' . $data['asal'] . '/' . $data['kd_jadwal']);
 		}
 	}
 	/* Log on to codeastro.com for more projects */
-	public function gettiket($value = '') {
+	public function gettiket($value = '')
+	{
 		include 'assets/phpqrcode/qrlib.php';
 		$asal = $this->db->query("SELECT * FROM tbl_tujuan
-               WHERE kd_tujuan ='".$this->session->userdata('asal')."'")->row_array();
+               WHERE kd_tujuan ='" . $this->session->userdata('asal') . "'")->row_array();
 		$getkode = $this->getkod_model->get_kodtmporder();
 		$kd_jadwal = $this->session->userdata('jadwal');
 		$kd_pelanggan = $this->session->userdata('kd_pelanggan');
@@ -105,15 +114,15 @@ class Tiket extends CI_Controller {
 		$email = $this->input->post('email');
 		$bank = $this->input->post('bank');
 		$satu_hari = mktime(0, 0, 0, date("n"), date("j") + 1, date("Y"));
-		$expired = date("d-m-Y", $satu_hari)." ".date('H:i:s');
+		$expired = date("d-m-Y", $satu_hari) . " " . date('H:i:s');
 		$status = '1';
-		QRcode::png($getkode, 'assets/frontend/upload/qrcode/'.$getkode.".png", "Q", 8, 8);
+		QRcode::png($getkode, 'assets/frontend/upload/qrcode/' . $getkode . ".png", "Q", 8, 8);
 		$count = count($kursi);
-		$tanggal = hari_indo(date('N', strtotime($jambeli))).', '.tanggal_indo(date('Y-m-d', strtotime(''.$jambeli.''))).', '.date('H:i', strtotime($jambeli));
-		for($i = 0; $i < $count; $i++) {
+		$tanggal = hari_indo(date('N', strtotime($jambeli))) . ', ' . tanggal_indo(date('Y-m-d', strtotime('' . $jambeli . ''))) . ', ' . date('H:i', strtotime($jambeli));
+		for ($i = 0; $i < $count; $i++) {
 			$simpan = array(
 				'kd_order' => $getkode,
-				'kd_tiket' => 'T'.$getkode.$kd_jadwal.str_replace('-', '', $tglberangkat).$kursi[$i],
+				'kd_tiket' => 'T' . $getkode . $kd_jadwal . str_replace('-', '', $tglberangkat) . $kursi[$i],
 				'kd_jadwal' => $kd_jadwal,
 				'kd_pelanggan' => $kd_pelanggan,
 				'asal_order' => $asal['kd_tujuan'],
@@ -129,34 +138,37 @@ class Tiket extends CI_Controller {
 				'email_order' => $email,
 				'kd_bank' => $bank,
 				'expired_order' => $expired,
-				'qrcode_order' => 'assets/frontend/upload/qrcode/'.$getkode.'.png',
+				'qrcode_order' => 'assets/frontend/upload/qrcode/' . $getkode . '.png',
 				'status_order' => $status
 			);
 			$this->db->insert('tbl_order', $simpan);
 		}
-		redirect('tiket/checkout/'.$getkode);
+		redirect('tiket/checkout/' . $getkode);
 	}
 	/* Log on to codeastro.com for more projects */
-	public function cekorder($id = '') {
+	public function cekorder($id = '')
+	{
 		$id = $this->input->post('kodetiket');
 		$sqlcek = $this->db->query("SELECT * FROM tbl_order LEFT JOIN tbl_jadwal on tbl_order.kd_jadwal = tbl_jadwal.kd_jadwal LEFT JOIN tbl_bus on tbl_jadwal.kd_bus = tbl_bus.kd_bus LEFT JOIN tbl_bank on tbl_order.kd_bank = tbl_bank.kd_bank WHERE kd_order ='$id' AND status_order != 3 AND status_order != 2")->result_array();
-		if($sqlcek) {
+		if ($sqlcek) {
 			$data['tiket'] = $sqlcek;
 			$data['count'] = count($sqlcek);
 			$this->load->view('frontend/payment', $data);
 		} else {
-			$this->session->set_flashdata('message', 'swal("Empty", "No Pending Tickets Found", "error");');
+			$this->session->set_flashdata('message', 'swal("Empty", "Tidak Ditemukan Tiket yang Tertunda", "error");');
 			redirect('tiket/cektiket');
 		}
 	}
-	public function payment($id = '') {
+	public function payment($id = '')
+	{
 		$this->getsecurity();
 		$sqlcek = $this->db->query("SELECT * FROM tbl_order LEFT JOIN tbl_jadwal on tbl_order.kd_jadwal = tbl_jadwal.kd_jadwal LEFT JOIN tbl_bus on tbl_jadwal.kd_bus = tbl_bus.kd_bus LEFT JOIN tbl_bank on tbl_order.kd_bank = tbl_bank.kd_bank WHERE kd_order ='$id'")->result_array();
 		$data['count'] = count($sqlcek);
 		$data['tiket'] = $sqlcek;
 		$this->load->view('frontend/payment', $data);
 	}
-	public function checkout($value = '') {
+	public function checkout($value = '')
+	{
 		$this->getsecurity();
 		$data['tiket'] = $value;
 		$send['sendmail'] = $this->db->query("SELECT * FROM tbl_order LEFT JOIN tbl_jadwal on tbl_order.kd_jadwal = tbl_jadwal.kd_jadwal LEFT JOIN tbl_tujuan on tbl_jadwal.kd_tujuan = tbl_tujuan.kd_tujuan LEFT JOIN tbl_bank on tbl_order.kd_bank = tbl_bank.kd_bank WHERE kd_order ='$value'")->row_array();
@@ -180,7 +192,7 @@ class Tiket extends CI_Controller {
 		$this->email->to($to);
 		$this->email->subject($subject);
 		$this->email->message($message);
-		if($this->email->send()) {
+		if ($this->email->send()) {
 			$this->session->set_flashdata('message', 'swal("Success", "Silakan lanjutkan  konfirmasi pembayaran!", "success");');
 			$this->load->view('frontend/checkout', $data);
 		} else {
@@ -190,10 +202,11 @@ class Tiket extends CI_Controller {
 		}
 	}
 	/* Log on to codeastro.com for more projects */
-	public function caritiket() {
+	public function caritiket()
+	{
 		$id = $this->input->post('kodetiket');
-		$sqlcek = $this->db->query("SELECT * FROM tbl_order LEFT JOIN tbl_bus on tbl_order.kd_bus = tbl_bus.kd_bus LEFT JOIN tbl_jadwal on tbl_order.kd_jadwal = tbl_jadwal.kd_jadwal WHERE kd_order ='".$id."'")->result_array();
-		if($sqlcek == NULL) {
+		$sqlcek = $this->db->query("SELECT * FROM tbl_order LEFT JOIN tbl_bus on tbl_order.kd_bus = tbl_bus.kd_bus LEFT JOIN tbl_jadwal on tbl_order.kd_jadwal = tbl_jadwal.kd_jadwal WHERE kd_order ='" . $id . "'")->result_array();
+		if ($sqlcek == NULL) {
 			$this->session->set_flashdata('message', 'swal("Kosong", "Tidak Ada Tiket", "error");');
 			redirect('tiket/cektiket');
 		} else {
@@ -201,24 +214,26 @@ class Tiket extends CI_Controller {
 			$this->load->view('frontend/payment', $data);
 		}
 	}
-	public function konfirmasi($value = '', $harga = '') {
+	public function konfirmasi($value = '', $harga = '')
+	{
 		$this->getsecurity();
 		$data['id'] = $value;
 		$data['total'] = $harga;
 		$this->load->view('frontend/konfirmasi', $data);
 	}
-	public function insertkonfirmasi($value = '') {
+	public function insertkonfirmasi($value = '')
+	{
 		$this->getsecurity();
 		$config['upload_path'] = './assets/frontend/upload/payment';
 		$config['allowed_types'] = 'gif|jpg|png|jpeg';
 		$this->load->library('upload', $config);
-		if(!$this->upload->do_upload('userfile')) {
+		if (!$this->upload->do_upload('userfile')) {
 			$error = array('error' => $this->upload->display_errors());
 			$this->session->set_flashdata('message', 'swal("Fail", "Check Your Confirmation Again", "error");');
-			redirect('tiket/konfirmasi/'.$this->input->post('kd_order').'/'.$this->input->post('total'));
+			redirect('tiket/konfirmasi/' . $this->input->post('kd_order') . '/' . $this->input->post('total'));
 		} else {
 			$upload_data = $this->upload->data();
-			$featured_image = '/assets/frontend/upload/payment/'.$upload_data['file_name'];
+			$featured_image = '/assets/frontend/upload/payment/' . $upload_data['file_name'];
 			$data = array(
 				'kd_konfirmasi' => $this->getkod_model->get_kodkon(),
 				'kd_order' => $this->input->post('kd_order'),
@@ -230,15 +245,16 @@ class Tiket extends CI_Controller {
 			);
 			$this->db->insert('tbl_konfirmasi', $data);
 			$this->session->set_flashdata('message', 'swal("Success", "Terimakasih. Harap tunggu untuk diverifikasi", "success");');
-			redirect('profile/tiketsaya/'.$this->session->userdata('kd_pelanggan'));
+			redirect('profile/tiketsaya/' . $this->session->userdata('kd_pelanggan'));
 		}
 	}
 	/* Log on to codeastro.com for more projects */
-	public function cetak($id = '') {
+	public function cetak($id = '')
+	{
 		$this->getsecurity();
 		$order = $id;
-		$data['cetak'] = $this->db->query("SELECT * FROM tbl_order LEFT JOIN tbl_bus on tbl_order.kd_bus = tbl_bus.kd_bus LEFT JOIN tbl_jadwal on tbl_order.kd_jadwal = tbl_jadwal.kd_jadwal LEFT JOIN tbl_tujuan on tbl_jadwal.kd_tujuan = tbl_tujuan.kd_tujuan WHERE kd_order ='".$id."'")->result_array();
-		$tiket = $this->db->query("SELECT email_pelanggan FROM tbl_pelanggan WHERE kd_pelanggan ='".$data['cetak'][0]['kd_pelanggan']."'")->row_array();
+		$data['cetak'] = $this->db->query("SELECT * FROM tbl_order LEFT JOIN tbl_bus on tbl_order.kd_bus = tbl_bus.kd_bus LEFT JOIN tbl_jadwal on tbl_order.kd_jadwal = tbl_jadwal.kd_jadwal LEFT JOIN tbl_tujuan on tbl_jadwal.kd_tujuan = tbl_tujuan.kd_tujuan WHERE kd_order ='" . $id . "'")->result_array();
+		$tiket = $this->db->query("SELECT email_pelanggan FROM tbl_pelanggan WHERE kd_pelanggan ='" . $data['cetak'][0]['kd_pelanggan'] . "'")->row_array();
 		die(print_r($tiket));
 	}
 

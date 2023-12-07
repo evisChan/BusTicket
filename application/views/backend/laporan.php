@@ -17,19 +17,19 @@
         <div class="container-fluid">
             <!-- Page Heading -->
             <!-- Log on to codeastro.com for more projects -->
-            <h1 class="h5 mb-4 text-gray-800">Report Section</h1>
+            <h1 class="h5 mb-4 text-gray-800">Laporan</h1>
             <table class="table table-bordered table-condensed"  id="mydata">
             <thead class="thead-dark">
                     <tr>
                         <th style="text-align:center;width:40px;">#</th>
-                        <th>Report</th>
+                        <th>Laporan</th>
                         <th style="width:100px;text-align:center;">Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td style="text-align:center;vertical-align:middle">1</td>
-                        <td style="vertical-align:middle;">Ticket Sales Report</td>
+                        <td style="vertical-align:middle;">Laporan Penjualan Tiket</td>
                         <td style="text-align:center;">
                             <a class="btn btn-sm btn-success" href="#lap_jual_pertanggal" data-toggle="modal"><span class="fa fa-print"></span> Print</a>
                         </td>
@@ -51,15 +51,15 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="myModalLabel">Select Date</h3>
+                    <h3 class="modal-title" id="myModalLabel">Pilih Tanggal</h3>
                 </div>
                 <form class="form-horizontal" method="post" action="<?= base_url('backend/laporan/laportanggal') ?>" target="_blank">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label class="control-label col-xs-3" > From Date</label>
+                            <label class="control-label col-xs-3" > Dari Tanggal</label>
                             <div class="col-xs-9">
                                 <div class='input-group date' id='datepicker' style="width:300px;">
-                                    <input type='text' name="mulai" class="form-control datepicker" value="" placeholder="Date..." required/>
+                                    <input type='text' name="mulai" class="form-control datepicker" value="" placeholder="tanggal..." required/>
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -67,10 +67,10 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-xs-3" > Till Date</label>
+                            <label class="control-label col-xs-3" > Sampai Tanggal</label>
                             <div class="col-xs-9">
                                 <div class='input-group date' id='datepicker' style="width:300px;">
-                                    <input type='text' name="sampai" class="form-control datepicker" value="" placeholder="Date..." required/>
+                                    <input type='text' name="sampai" class="form-control datepicker" value="" placeholder="tanggal..." required/>
                                     <span class="input-group-addon">
                                         <span class="glyphicon glyphicon-calendar"></span>
                                     </span>
@@ -79,7 +79,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Close</button>
+                        <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Tutup</button>
                         <button class="btn btn-success"><span class="fa fa-print"></span> Print</button>
                     </div>
                 </form>
@@ -92,15 +92,15 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h3 class="modal-title" id="myModalLabel">Choose Month</h3>
+                    <h3 class="modal-title" id="myModalLabel">Pilih Bulan</h3>
                 </div>
                 <form class="form-horizontal" method="post" action="<?= base_url('backend/laporan/laporbulan') ?>" target="_blank">
                     <div class="modal-body">
                         <div class="form-group">
-                            <label class="control-label col-xs-3" >Month</label>
+                            <label class="control-label col-xs-3" >Bulan</label>
                             <div class="col-xs-9">
                                 <select name="bln" class="selectpicker show-tick form-control" data-live-search="true" title="Choose Month" data-width="80%" required/>
-                                    <option value='' selected disabled>Choose Month</option>
+                                    <option value='' selected disabled>Pilih Bulan</option>
                                 <?php foreach ($bulan as $row) { ?>
                                     <option value="<?= $row['bulan'] ?>"><?= $row['bulan'] ?></option>
                                 <?php } ?>
@@ -110,7 +110,7 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Close</button>
+                        <button class="btn btn-danger" data-dismiss="modal" aria-hidden="true">Tutup</button>
                         <button class="btn btn-success"><span class="fa fa-print"></span> Print</button>
                     </div>
                 </form>

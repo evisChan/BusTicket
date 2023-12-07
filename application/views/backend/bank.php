@@ -7,7 +7,9 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 	<meta name="description" content="">
 	<meta name="author" content="">
-	<title><?= $title ?></title>
+	<title>
+		<?= $title ?>
+	</title>
 	<!-- css -->
 	<?php $this->load->view('backend/include/base_css'); ?>
 </head>
@@ -17,40 +19,51 @@
 	<?php $this->load->view('backend/include/base_nav'); ?>
 	<!-- Begin Page Content -->
 	<div class="container-fluid">
-		<h1 class="h5 text-gray-800">Bank List</h1>
+		<h1 class="h5 text-gray-800">Manajemen Bank</h1>
 		<!-- DataTales Example -->
 		<!-- Log on to codeastro.com for more projects -->
 		<div class="card shadow mb-4">
 			<div class="card-header py-3">
 				<button type="button" class="btn btn-success pull-right" data-toggle="modal" data-target="#ModalTujuan">
-				Add Bank
+					Tambah Bank
 				</button>
 			</div>
 			<div class="card-body">
 				<div class="table-responsive">
 					<table class="table table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
-					<thead class="thead-dark">
+						<thead class="thead-dark">
 							<tr>
 								<th>#</th>
-								<th>Bank Code</th>
-								<th>Name</th>
-								<th>Account Number</th>
-								<th>On behalf of</th>
+								<th>Kode Bank</th>
+								<th>Nama</th>
+								<th>Nomor Rekening</th>
+								<th>Atas nama</th>
 								<th>Action</th>
 							</tr>
 						</thead>
 						<tbody>
-							<?php $i = 1 ; foreach ($bank as $row ) { ?>
-							<tr>
-								<td><?= $i++; ?></td>
-								<td><?= $row['kd_bank']; ?></td>
-								<td><?= $row['nama_bank']; ?></td>
-								<td><?= $row['nomrek_bank']; ?></td>
-								<td><?= $row['nasabah_bank']; ?></td>
-								<td align="center"><a href="<?= base_url('backend/bank/viewbank/'.$row['kd_bank']) ?>"
-										class="btn btn btn-info">View</a></a>
-								</td>
-							</tr>
+							<?php $i = 1;
+							foreach ($bank as $row) { ?>
+								<tr>
+									<td>
+										<?= $i++; ?>
+									</td>
+									<td>
+										<?= $row['kd_bank']; ?>
+									</td>
+									<td>
+										<?= $row['nama_bank']; ?>
+									</td>
+									<td>
+										<?= $row['nomrek_bank']; ?>
+									</td>
+									<td>
+										<?= $row['nasabah_bank']; ?>
+									</td>
+									<td align="center"><a href="<?= base_url('backend/bank/viewbank/' . $row['kd_bank']) ?>"
+											class="btn btn btn-info">View</a></a>
+									</td>
+								</tr>
 							<?php } ?>
 						</tbody>
 					</table>
@@ -70,24 +83,26 @@
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
-					<h5 class="modal-title" id="exampleModalLabel">Add Bank</h5>
+					<h5 class="modal-title" id="exampleModalLabel">Tambah Bank</h5>
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
 				</div>
 				<div class="modal-body">
-					<form action="<?= base_url()?>backend/bank/tambahbank" method="post" enctype="multipart/form-data">
+					<form action="<?= base_url() ?>backend/bank/tambahbank" method="post" enctype="multipart/form-data">
 						<div class="form-group">
-							<label class="">Customer Name</label>
-							<input type="text" class="form-control" name="nasabah" required placeholder="Customer Name">
+							<label class="">Nama Pelanggan</label>
+							<input type="text" class="form-control" name="nasabah" required
+								placeholder="Nama Pelanggan">
 						</div>
 						<div class="form-group">
-							<label class="">Bank name</label>
-							<input type="text" class="form-control" name="bank" required placeholder="Bank name">
+							<label class="">Nama Bank</label>
+							<input type="text" class="form-control" name="bank" required placeholder="Nama Bank">
 						</div>
 						<div class="form-group">
-							<label class="">Account number</label>
-							<input type="number" class="form-control" name="nomor" required placeholder="Account number">
+							<label class="">No Rekening</label>
+							<input type="number" class="form-control" name="nomor" required
+								placeholder="nomor rekening">
 						</div>
 						<div class="form-group">
 							<label for="exampleInputEmail1">Upload Photo Logo Bank</label>
@@ -95,7 +110,7 @@
 						</div>
 						<div class="modal-footer">
 							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-							<button class="btn btn-success">Save</button>
+							<button class="btn btn-success">Simpan</button>
 						</div>
 					</form>
 				</div>

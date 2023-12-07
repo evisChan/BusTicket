@@ -17,7 +17,7 @@ class Home extends CI_Controller {
 		$data['konfirmasi'] = $this->db->query("SELECT count(kd_konfirmasi) FROM tbl_konfirmasi ")->result_array();
 		$data['bus'] = $this->db->query("SELECT count(kd_bus) FROM tbl_bus WHERE status_bus = 1 ")->result_array();
 		$data['terminal'] = $this->db->query("SELECT count(kd_tujuan) FROM tbl_tujuan")->result_array();
-		$data['schedules'] = $this->db->query("SELECT count(kd_jadwal) FROM tbl_jadwal")->result_array();
+		$data['jadwal'] = $this->db->query("SELECT count(kd_jadwal) FROM tbl_jadwal")->result_array();
 		// die(print_r($data));
 		$this->load->view('backend/home', $data);
 	}

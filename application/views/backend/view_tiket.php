@@ -34,7 +34,7 @@
           <div class="card-body">
             <div class="row">
               <div class="col-sm-6">
-                <p>Kode Pemesanan : <b>
+                <p>Kode Pesanan : <b>
                     <?= $tiket['kd_order']; ?>
                   </b></p>
                 <p>Nama pelanggan : <b>
@@ -51,7 +51,7 @@
               </div>
             </div>
             <hr>
-            <a class="btn btn-danger" href="javascript:history.back()"> Go Back</a>
+            <a class="btn btn-danger" href="javascript:history.back()"> Kembali</a>
 
           </div>
         </form>

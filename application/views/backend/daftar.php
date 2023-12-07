@@ -32,10 +32,10 @@
 				<div class="card-body">
 					<div class="row">
 						<div class="col-sm-12">
-							<form class="user" method="post" action="<?= base_url('backend/login/daftar') ?>">
+							<form class="user" method="post" action="<?= base_url('backend/admin/daftar') ?>">
 								<div class="form-group">
 									<input type="text" class="form-control form-control-user" id="exampleFirstName"
-										name="name" value="<?= set_value('name') ?>" placeholder="Full Nama">
+										name="name" value="<?= set_value('name') ?>" placeholder="Full Name">
 									<?= form_error('name'), '<small class="text-danger pl-3">', '</small>'; ?>
 								</div>
 								<div class="form-group">
@@ -60,13 +60,13 @@
 								</div>
 								<div class="form-group">
 									<select class="form-control" name="level">
-										<!-- <option value="2">Adminstartor</option> -->
-										<option value="1">Admin</option>
+										<!-- <option value="1">Adminstartor</option> -->
+										<option value="2">Admin</option>
 									</select>
 								</div>
 								<?= form_error('password'), '<small class="text-danger pl-3">', '</small>'; ?>
-								<a href="<?= base_url('backend/admin') ?>" class="btn btn-danger">Kembali</a>
-								<button type="submit" class="btn btn-success float-right">
+								<a href="<?= base_url('backend/admin') ?>" class="btn btn-default">Kembali</a>
+								<button type="submit" class="btn btn-primary float-right">
 									Tambah Akun
 								</button>
 							</form>
@@ -75,6 +75,7 @@
 				</div>
 			</div>
 		</div>
+
 		<!-- End of Main Content -->
 		<!-- The Modal -->
 		<!-- Footer --><!-- Log on to codeastro.com for more projects -->

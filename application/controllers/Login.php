@@ -1,32 +1,38 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Login extends CI_Controller {
-	function __construct() {
+class Login extends CI_Controller
+{
+	function __construct()
+	{
 		parent::__construct();
 		$this->load->library('form_validation');
 	}
 
-	public function index() {
+	public function index()
+	{
 		$this->autlogin();
 	}
 
-	public function autlogin() {
+	public function autlogin()
+	{
 		$this->load->view('frontend/login');
 	}
-	public function logout() {
+	public function logout()
+	{
 		$this->session->sess_destroy();
 		redirect(base_url('login'));
 	}
 
-	public function cekuser() {
+	public function cekuser()
+	{
 		$username = strtolower($this->input->post('username'));
 		$password = $this->input->post('password');
-		$sqlCheck = $this->db->query('select * from tbl_pelanggan where username_pelanggan = "'.$username.'" OR email_pelanggan = "'.$username.'" ')->row();
+		$sqlCheck = $this->db->query('select * from tbl_pelanggan where username_pelanggan = "' . $username . '" OR email_pelanggan = "' . $username . '" ')->row();
 		// die(print_r($sqlCheck));
-		if($sqlCheck) {
-			if($sqlCheck->status_pelanggan == 1) {
-				if(password_verify($password, $sqlCheck->password_pelanggan)) {
+		if ($sqlCheck) {
+			if ($sqlCheck->status_pelanggan == 1) {
+				if (password_verify($password, $sqlCheck->password_pelanggan)) {
 					$sess = [
 						'kd_pelanggan' => $sqlCheck->kd_pelanggan,
 						'username' => $sqlCheck->username_pelanggan,
@@ -39,10 +45,10 @@ class Login extends CI_Controller {
 						'alamat' => $sqlCheck->alamat_pelanggan
 					];
 					$this->session->set_userdata($sess);
-					if($this->session->userdata('jadwal') == NULL) {
+					if ($this->session->userdata('jadwal') == NULL) {
 						redirect('tiket');
 					} else {
-						redirect('tiket/beforebeli/'.$this->session->userdata('jadwal').'/'.$this->session->userdata('asal').'/'.$this->session->userdata('tanggal'));
+						redirect('tiket/beforebeli/' . $this->session->userdata('jadwal') . '/' . $this->session->userdata('asal') . '/' . $this->session->userdata('tanggal'));
 					}
 				} else {
 					$this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">
@@ -64,7 +70,8 @@ class Login extends CI_Controller {
 		}
 	}
 
-	public function daftar() {
+	public function daftar()
+	{
 		$this->form_validation->set_rules('nomor', 'Nomor', 'trim|required|is_unique[tbl_pelanggan.telpon_pelanggan]', array(
 			'required' => 'Mobile number is required to be filled in.',
 			'is_unique' => 'Number Already In Use.'
@@ -87,7 +94,7 @@ class Login extends CI_Controller {
 			'min_length' => 'Password Minimum 8 Characters.'
 		));
 		$this->form_validation->set_rules('password2', 'Password', 'trim|required|matches[password1]');
-		if($this->form_validation->run() == false) {
+		if ($this->form_validation->run() == false) {
 			$this->load->view('frontend/daftar');
 		} else {
 			// die(print_r($_POST));
@@ -104,7 +111,7 @@ class Login extends CI_Controller {
 				'date_create_pelanggan' => time(),
 				'password_pelanggan' => password_hash($this->input->post('password1'), PASSWORD_DEFAULT)
 			);
-			$token = md5($this->input->post('email').date("d-m-Y H:i:s"));
+			$token = md5($this->input->post('email') . date("d-m-Y H:i:s"));
 			$data1 = array(
 				'nama_token' => $token,
 				'email_token' => $this->input->post('email'),
@@ -113,12 +120,13 @@ class Login extends CI_Controller {
 			$this->db->insert('tbl_pelanggan', $data);
 			$this->db->insert('tbl_token_pelanggan', $data1);
 			$this->_sendmail($token, 'verify');
-			$this->session->set_flashdata('message', 'swal("Success", "Successfully Registered. Welcome to ALMASAR!", "success");');
+			$this->session->set_flashdata('message', 'swal("Success", "Berhasil daftar. Welcome to ALMASAR!", "success");');
 			redirect('login');
 		}
 
 	}
-	private function _sendmail($token = '', $type = '') {
+	private function _sendmail($token = '', $type = '')
+	{
 		$config = [
 			'mailtype' => 'html',
 			'charset' => 'utf-8',
@@ -135,70 +143,72 @@ class Login extends CI_Controller {
 		$this->email->from('ALMASAR');
 		$this->email->to($this->input->post('email'));
 		// $this->email->attach('https://masrud.com/content/images/20181215150137-codeigniter-smtp-gmail.png');
-		if($type == 'verify') {
-			$this->email->subject('Account verify ALMASAR');
-			$this->email->message('Click the link to verify your account <a href="'.base_url('login/verify?email='.$this->input->post('email').'&token='.$token).'" >Verification</a>');
-		} elseif($type == 'forgot') {
+		if ($type == 'verify') {
+			$this->email->subject('Verifikasi  Akun ALMASAR');
+			$this->email->message('Klik   link untuk memverifikasi AKun Anda <a href="' . base_url('login/verify?email=' . $this->input->post('email') . '&token=' . $token) . '" >Verification</a>');
+		} elseif ($type == 'forgot') {
 			$this->email->subject('ALMASAR Ticket Reset Account');
-			$this->email->message('Click the link to Reset your account <a href="'.base_url('login/forgot?email='.$this->input->post('email').'&token='.$token).'" >Reset Password</a>');
+			$this->email->message('Klik  link untuk Reset Akun ANda <a href="' . base_url('login/forgot?email=' . $this->input->post('email') . '&token=' . $token) . '" >Reset Password</a>');
 		}
-		if($this->email->send()) {
+		if ($this->email->send()) {
 			return true;
 		} else {
-			echo 'Error! email cant be sent.';
+			echo 'Error! email tidak terkirim.';
 		}
 	}
 	/* Log on to codeastro.com for more projects */
-	public function verify($value = '') {
+	public function verify($value = '')
+	{
 		$email = $this->input->get('email');
 		$token = $this->input->get('token');
 		$sqlcek = $this->db->get_where('tbl_pelanggan', ['email_pelanggan' => $email])->row_array();
-		if($sqlcek) {
+		if ($sqlcek) {
 			$sqlcek_token = $this->db->get_where('tbl_token_pelanggan', ['nama_token' => $token])->row_array();
-			if($sqlcek_token) {
-				if(time() - $sqlcek_token['date_create_token'] < (60 * 60 * 24)) {
+			if ($sqlcek_token) {
+				if (time() - $sqlcek_token['date_create_token'] < (60 * 60 * 24)) {
 					$update = array('status_pelanggan' => 1, );
 					$where = array('email_pelanggan' => $email);
 					$this->db->update('tbl_pelanggan', $update, $where);
 					$this->db->delete('tbl_token_pelanggan', ['email_token' => $email]);
 					$this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">
-					Successfully Verify Your Account, Login
+					Berhasil Memverifikasi Akun Anda, Masuk
 					</div>');
 					redirect('login');
 				} else {
 					$this->db->delete('tbl_pelanggan', ['email_pelanggan' => $email]);
 					$this->db->delete('tbl_token_pelanggan', ['email_token' => $email]);
 					$this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">
-					Token Expired, Please re-register your account
+					Token Kedaluwarsa, Harap daftarkan ulang akun Anda
 						</div>');
 					redirect('login');
 				}
 			} else {
 				$this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">
-				Incorrect Token Verification Failed
+				Verifikasi Token Salah Gagal
 						</div>');
 				redirect('login');
 			}
 		} else {
 			$this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">
-		Email Verification Failed
+		Verifikasi Email Gagal
 						</div>');
 			redirect('login');
 		}
 	}
 	/* Log on to codeastro.com for more projects */
-	public function lupapassword($value = '') {
+	public function lupapassword($value = '')
+	{
 		$this->form_validation->set_rules('email', 'Email', 'trim|required|valid_email', array(
 			'required' => 'Email Required.',
-			'valid_email' => 'Enter Email Correctly',
+			'valid_email' => 'Memasukkan Email dengan benar',
 		));
-		if($this->form_validation->run() == false) {
+		if ($this->form_validation->run() == false) {
 			$this->load->view('frontend/lupapassword');
 		} else {
 			$email = $this->input->post('email');
 			$sqlcek = $this->db->get_where('tbl_pelanggan', ['email_pelanggan' => $email], ['status_pelanggan' => 1])->row_array();
-			if($sqlcek) {
-				$token = md5($email.date("d-m-Y H:i:s"));
+			if ($sqlcek) {
+				$token = md5($email . date("d-m-Y H:i:s"));
 				$data = array(
 					'nama_token' => $token,
 					'email_token' => $email,
@@ -210,37 +220,39 @@ class Login extends CI_Controller {
 				redirect('login');
 			} else {
 				$this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">
-						No Email Or Account Not Active
+				Tidak ada email atau akun yang tidak aktif
 						</div>');
 				redirect('login/lupapassword');
 			}
 		}
 	}
-	public function forgot($value = '') {
+	public function forgot($value = '')
+	{
 		$email = $this->input->get('email');
 		$token = $this->input->get('token');
 		$sqlcek = $this->db->get_where('tbl_pelanggan', ['email_pelanggan' => $email])->row_array();
-		if($sqlcek) {
+		if ($sqlcek) {
 			$sqlcek_token = $this->db->get_where('tbl_token_pelanggan', ['nama_token' => $token])->row_array();
-			if($sqlcek_token) {
+			if ($sqlcek_token) {
 				$this->session->set_userdata('resetemail', $email);
 				$this->changepassword();
 			} else {
 				$this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">
-				Failed to Reset Wrong Email Token
+				Gagal Menyetel Ulang Token Email yang Salah
 						</div>');
 				redirect('login');
 			}
 		} else {
 			$this->session->set_flashdata('pesan', '<div class="alert alert-danger" role="alert">
-		Failed to Reset Wrong Email
+			Gagal Mengatur Ulang Email yang Salah
 						</div>');
 			redirect('login');
 		}
 	}
 	/* Log on to codeastro.com for more projects */
-	public function changepassword($value = '') {
-		if($this->session->userdata('resetemail') == NULL) {
+	public function changepassword($value = '')
+	{
+		if ($this->session->userdata('resetemail') == NULL) {
 			redirect('login/daftar');
 		}
 		$this->form_validation->set_rules('password1', 'Password', 'trim|required|min_length[8]|matches[password2]', array(
@@ -248,7 +260,7 @@ class Login extends CI_Controller {
 			'min_length' => 'Password Minimum 8 Characters.'
 		));
 		$this->form_validation->set_rules('password2', 'Password', 'trim|required|matches[password1]');
-		if($this->form_validation->run() == false) {
+		if ($this->form_validation->run() == false) {
 			$this->load->view('frontend/resetpassword');
 		} else {
 			$email = $this->session->userdata('resetemail');
@@ -261,7 +273,7 @@ class Login extends CI_Controller {
 			$this->session->unset_userdata('resetemail');
 			$this->db->delete('tbl_token_pelanggan', ['email_token' => $email]);
 			$this->session->set_flashdata('pesan', '<div class="alert alert-success" role="alert">
-					Successfully Reset, Login Your Account Back
+			Berhasil Mengatur Ulang, Login Kembali Akun Anda
 					</div>');
 			redirect('login');
 		}

@@ -16,12 +16,12 @@
 <script src="<?= base_url() ?>assets/backend/js/demo/datatables-demo.js"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 <script src="<?= base_url() ?>assets/datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-<?= "<script>".$this->session->flashdata('message')."</script>"?>
+<?= "<script>" . $this->session->flashdata('message') . "</script>" ?>
 <script type="text/javascript">
 	$(document).ready(function () {
 		$(".preloader").fadeOut();
 	});
-  
+
 	$(":submit").click(function (e) {
 		window.addEventListener("beforeunload", function (event) {
 			$(".preloader").show();
@@ -41,8 +41,8 @@
 				</button>
 			</div>
 			<div class="modal-body">
-				[ ] with ❤ in Jakarta/Cengkareng <br>
-				By Bahyu Sanciko
+				[ ] with ❤ in Medan <br>
+				By Evi Sigalingging
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>

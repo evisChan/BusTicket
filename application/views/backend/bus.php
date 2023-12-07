@@ -44,7 +44,7 @@
             </thead>
             <tbody>
               <?php $i = 1;
-              foreach($bus as $row) { ?>
+              foreach ($bus as $row) { ?>
                 <tr>
                   <td>
                     <?= $i++; ?>
@@ -61,12 +61,12 @@
                   <td>
                     <?= $row['kapasitas_bus'] ?>
                   </td>
-                  <?php if($row['status_bus'] == '1') { ?>
+                  <?php if ($row['status_bus'] == '1') { ?>
                     <td class="btn-success"> Active</td>
                   <?php } else { ?>
                     <td class="btn-danger">InActive</td>
                   <?php } ?>
-                  <td align="center"><a href="<?= base_url('backend/bus/viewbus/'.$row['kd_bus']) ?>"
+                  <td align="center"><a href="<?= base_url('backend/bus/viewbus/' . $row['kd_bus']) ?>"
                       class="btn btn btn-info">View</a></a>
                   </td>
                 </tr>
@@ -110,8 +110,8 @@
               <input type="number" class="form-control" id="seat" name="seat" placeholder="[Maximum 19]">
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-              <button class="btn btn-success">Save</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
+              <button class="btn btn-success">Simpan</button>
             </div>
           </form>
         </div>
