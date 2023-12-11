@@ -160,7 +160,7 @@
               <p>Kedatangan : <b>
                   <?= date('H:i', strtotime($jadwal['jam_tiba_jadwal'])) ?>
                 </b></p>
-              <p>Harga Jadwal : <b>$
+              <p>Harga Jadwal : <b>Rp
                   <?= $jadwal['harga_jadwal']; ?>
                 </b></p>
             </div>

@@ -132,7 +132,7 @@
 							</div>
 							<div class="col-12 bigger-title text-orange">
 								<h3>
-									<p>$
+									<p>Rp
 										<?= number_format($total, 0, ',', '.'); ?>
 									</p>
 								</h3>

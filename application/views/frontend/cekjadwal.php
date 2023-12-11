@@ -16,7 +16,7 @@
 	<meta charset="UTF-8">
 	<!-- Log on to codeastro.com for more projects -->
 	<!-- Site Title -->
-	<title>BUS TICKET BOOKING</title>
+	<title>PEMESANAN TIKET BUS</title>
 	<link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
 	<!--CSS-->
 	<?php $this->load->view('frontend/include/base_css'); ?>
@@ -49,24 +49,24 @@
 										</tr>
 									</thead>
 									<tbody>
-										<?php for($i = 0; $i < count($jadwal); $i++) { ?>
+										<?php for ($i = 0; $i < count($jadwal); $i++) { ?>
 											<tr>
 												<td>
-													<?php echo strtoupper($asal['kota_tujuan'])." - ".strtoupper($jadwal[$i]['kota_tujuan'])." [".$jadwal[$i]['kd_jadwal']."]"; ?>
+													<?php echo strtoupper($asal['kota_tujuan']) . " - " . strtoupper($jadwal[$i]['kota_tujuan']) . " [" . $jadwal[$i]['kd_jadwal'] . "]"; ?>
 												</td>
 												<td>
 													<?php echo $jadwal[$i]['terminal_tujuan'] ?>
 												</td>
 												<td>
-													<?php echo hari_indo(date('N', strtotime($tanggal))).', '.tanggal_indo(date('Y-m-d', strtotime(''.$tanggal.''))).', '.date('H:i', strtotime($jadwal[$i]['jam_berangkat_jadwal'])); ?>
+													<?php echo hari_indo(date('N', strtotime($tanggal))) . ', ' . tanggal_indo(date('Y-m-d', strtotime('' . $tanggal . ''))) . ', ' . date('H:i', strtotime($jadwal[$i]['jam_berangkat_jadwal'])); ?>
 												</td>
 												<td>
 													<?php echo $jadwal[$i]['kapasitas_bus'] - $kursi[$i][0]['count(no_kursi_order)'] ?>
 												</td>
-												<td>$
-													<?php echo number_format((float)($jadwal[$i]['harga_jadwal']), 0, ",", "."); ?>
+												<td>Rp
+													<?php echo number_format((float) ($jadwal[$i]['harga_jadwal']), 0, ",", "."); ?>
 												</td>
-												<td><a href="<?php echo base_url('tiket/beforebeli/').$jadwal[$i]['kd_jadwal'].'/'.$asal['kd_tujuan'].'/'.$tanggal ?>"
+												<td><a href="<?php echo base_url('tiket/beforebeli/') . $jadwal[$i]['kd_jadwal'] . '/' . $asal['kd_tujuan'] . '/' . $tanggal ?>"
 														class=" btn btn-outline-success">Pilih</a></td>
 											</tr>
 										<?php } ?>

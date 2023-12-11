@@ -188,7 +188,7 @@
                     <div class="col-sm-8">
                       <img id="myImg" src="<?= base_url($row['photo_konfirmasi']) ?>" alt="<?= $row['nama_konfirmasi'] ?>"
                         style="width:100%;max-width:300px">
-                    </div>
+                    </div> 
                   </div>
                 </div>
               <?php } ?>

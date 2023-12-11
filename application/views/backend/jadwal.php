@@ -66,7 +66,7 @@
                     <?= date('H:i', strtotime($row['jam_tiba_jadwal'])); ?>
                   </td>
                   <!-- <td>$<?= number_format((float)($row['harga_jadwal']), 0, ",", "."); ?>,-</td> -->
-                  <td>$
+                  <td>Rp
                     <?= number_format((float)($row['harga_jadwal']), 0, ",", "."); ?>
                   </td>
                   <td><a href="<?= base_url('backend/jadwal/viewjadwal/'.$row['kd_jadwal']) ?>"

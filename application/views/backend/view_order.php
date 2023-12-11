@@ -29,11 +29,11 @@
         </h6>
       </div>
       <div class="card-body">
-        <form action="<?= base_url().'backend/order/inserttiket' ?>" method="post" enctype="multipart/form-data">
+        <form action="<?= base_url() . 'backend/order/inserttiket' ?>" method="post" enctype="multipart/form-data">
 
           <div class="card-body">
             <div class="row">
-              <?php foreach($tiket as $row) { ?>
+              <?php foreach ($tiket as $row) { ?>
                 <input type="hidden" class="form-control" name="kd_pelanggan" value="<?= $row['kd_pelanggan'] ?>"
                   readonly>
                 <input type="hidden" class="form-control" name="kd_order" value="<?= $row['kd_order'] ?>" readonly>
@@ -71,7 +71,7 @@
                     <label for="" class="col-sm-4 control-label">Usia Pelanggan</label>
                     <div class="col-sm-8">
                       <input type="text" class="form-control" name="umur_kursi[]>"
-                        value="<?= $row['umur_kursi_order'] ?> Years" readonly>
+                        value="<?= $row['umur_kursi_order'] ?> Tahun" readonly>
                     </div>
                   </div>
                   <div class="row form-group">
@@ -85,7 +85,7 @@
                     <label for="" class="col-sm-4 control-label">Batas Pembayaran</label>
                     <div class="col-sm-8">
                       <input type="text" class="form-control" name="tgl_beli"
-                        value="<?= hari_indo(date('N', strtotime($row['expired_order']))).', '.tanggal_indo(date('Y-m-d', strtotime(''.$row['expired_order'].''))).', '.date('H:i', strtotime($row['expired_order'])); ?>"
+                        value="<?= hari_indo(date('N', strtotime($row['expired_order']))) . ', ' . tanggal_indo(date('Y-m-d', strtotime('' . $row['expired_order'] . ''))) . ', ' . date('H:i', strtotime($row['expired_order'])); ?>"
                         readonly>
                     </div>
                   </div>
@@ -105,7 +105,7 @@
                       lihat bukti pembayaran dari pelanggan.</p>
                     <hr>
                     <p class="mb-0"> <a
-                        href="<?= base_url('backend/konfirmasi/viewkonfirmasi/'.$tiket[0]['kd_order']) ?>"
+                        href="<?= base_url('backend/konfirmasi/viewkonfirmasi/' . $tiket[0]['kd_order']) ?>"
                         class="btn btn-success">View</a></p>
                   </div>
 
@@ -115,13 +115,13 @@
                 <div class="row form-group">
                   <label for="" class="col-sm-4 control-label">Status</label>
                   <div class="col-sm-8">
-                    <?php if($tiket[0]['status_order'] == '1') { ?>
+                    <?php if ($tiket[0]['status_order'] == '1') { ?>
                       <select class="form-control" name="status" required>
                         <option value='' selected disabled>Belum bayar</option>
                         <option value='2'>Sudah Bayar</option>
                         <option value='3'>Hapus Pesanan</option>
                       </select>
-                    <?php } elseif($tiket[0]['status_order'] == '2') { ?>
+                    <?php } elseif ($tiket[0]['status_order'] == '2') { ?>
                       <p class="btn "><b class="btn btn-outline-success">Sudah Bayar</b> </p>
 
                     <?php } else { ?>
@@ -133,7 +133,7 @@
                 <div class="row form-group">
                   <label for="" class="col-sm-4 control-label">Total Pembayaran</label>
                   <div class="col-sm-8">
-                    <p><b>$
+                    <p><b>Rp
                         <?php $total = count($tiket) * $tiket[0]['harga_jadwal'];
                         echo number_format($total) ?>
                       </b></p>
@@ -142,16 +142,18 @@
                 </div>
               </div>
             </div>
-            <hr><a class="btn btn-danger float-left" href="<?= base_url().'backend/order' ?>"> Kembali</a>
-            <?php if($tiket[0]['status_order'] == '1') { ?>
+            <hr><a class="btn btn-danger float-left" href="<?= base_url() . 'backend/order' ?>"> Kembali</a>
+            <?php if ($tiket[0]['status_order'] == '1') { ?>
               <button type="submit" class="btn btn-success">Submit</button>
-            <?php } else if($tiket[0]['status_order'] == '3') { ?>
+            <?php } else if ($tiket[0]['status_order'] == '3') { ?>
                 <p><b>Batalkan Tiket</b></p>
             <?php } else { ?>
                 <a class="btn btn-primary float-right"
-                  href="<?= base_url('assets/backend/upload/etiket/'.$row['kd_order'].'.pdf') ?>" target="_blank"> Print
+                  href="<?= base_url('assets/backend/upload/etiket/' . $row['kd_order'] . '.pdf') ?>" target="_blank"> Print
                   E-Ticket</a>
-                <!-- <a class="btn btn-primary float-right" href="<?= base_url('backend/order/kirimemail/'.$row['kd_order']) ?>"> Send E-Ticket</a> -->
+                <a class="btn btn-primary float-right"
+                  href="<?= base_url('backend/order/kirimemail/' . $row['kd_order']) ?>">
+                  Send E-Ticket</a>
             <?php } ?>
           </div>
       </div>

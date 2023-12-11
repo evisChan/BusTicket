@@ -1,32 +1,37 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Order extends CI_Controller {
-	function __construct() {
+class Order extends CI_Controller
+{
+	function __construct()
+	{
 		parent::__construct();
 		$this->load->helper('tglindo_helper');
 		$this->load->model('getkod_model');
 		$this->getsecurity();
 		date_default_timezone_set("Asia/Jakarta");
 	}
-	function getsecurity($value = '') {
-		if(empty($this->session->userdata('username_admin'))) {
+	function getsecurity($value = '')
+	{
+		if (empty($this->session->userdata('username_admin'))) {
 			$this->session->sess_destroy();
 			redirect('backend/login');
 		}
 	}
-	public function index() {
-		$data['title'] = "Booking List";
+	public function index()
+	{
+		$data['title'] = "Daftar Pesanan";
 		$data['order'] = $this->db->query("SELECT * FROM tbl_order group by kd_order")->result_array();
 		// die(print_r($data));
 		$this->load->view('backend/order', $data);
 	}
 	/* Log on to codeastro.com for more projects */
-	public function vieworder($id = '') {
+	public function vieworder($id = '')
+	{
 		// die(print_r($_GET));
-		$cek = $this->input->get('order').$id;
-		$sqlcek = $this->db->query("SELECT * FROM tbl_order LEFT JOIN tbl_jadwal on tbl_order.kd_jadwal = tbl_jadwal.kd_jadwal WHERE kd_order ='".$cek."' ")->result_array();
-		if($sqlcek) {
+		$cek = $this->input->get('order') . $id;
+		$sqlcek = $this->db->query("SELECT * FROM tbl_order LEFT JOIN tbl_jadwal on tbl_order.kd_jadwal = tbl_jadwal.kd_jadwal WHERE kd_order ='" . $cek . "' ")->result_array();
+		if ($sqlcek) {
 			$data['tiket'] = $sqlcek;
 			$data['title'] = "View Bookings";
 			// die(print_r($sqlcek));
@@ -36,7 +41,8 @@ class Order extends CI_Controller {
 			redirect('backend/tiket');
 		}
 	}
-	public function inserttiket($value = '') {
+	public function inserttiket($value = '')
+	{
 		$id = $this->input->post('kd_order');
 		$asal = $this->input->post('asal_beli');
 		$tiket = $this->input->post('kd_tiket');
@@ -49,15 +55,15 @@ class Order extends CI_Controller {
 		$where = array('kd_order' => $id);
 		$update = array('status_order' => $status);
 		$this->db->update('tbl_order', $update, $where);
-		$data['asal'] = $this->db->query("SELECT * FROM tbl_tujuan WHERE kd_tujuan ='".$asal."'")->row_array();
-		$data['cetak'] = $this->db->query("SELECT * FROM tbl_order LEFT JOIN tbl_jadwal on tbl_order.kd_jadwal = tbl_jadwal.kd_jadwal LEFT JOIN tbl_tujuan on tbl_jadwal.kd_tujuan = tbl_tujuan.kd_tujuan WHERE kd_order ='".$id."'")->result_array();
-		$pelanggan = $this->db->query("SELECT email_pelanggan FROM tbl_pelanggan WHERE kd_pelanggan ='".$data['cetak'][0]['kd_pelanggan']."'")->row_array();
-		$pdfFilePath = "assets/backend/upload/etiket/".$id.".pdf";
+		$data['asal'] = $this->db->query("SELECT * FROM tbl_tujuan WHERE kd_tujuan ='" . $asal . "'")->row_array();
+		$data['cetak'] = $this->db->query("SELECT * FROM tbl_order LEFT JOIN tbl_jadwal on tbl_order.kd_jadwal = tbl_jadwal.kd_jadwal LEFT JOIN tbl_tujuan on tbl_jadwal.kd_tujuan = tbl_tujuan.kd_tujuan WHERE kd_order ='" . $id . "'")->result_array();
+		$pelanggan = $this->db->query("SELECT email_pelanggan FROM tbl_pelanggan WHERE kd_pelanggan ='" . $data['cetak'][0]['kd_pelanggan'] . "'")->row_array();
+		$pdfFilePath = "assets/backend/upload/etiket/" . $id . ".pdf";
 		$html = $this->load->view('frontend/cetaktiket', $data, TRUE);
 		$this->load->library('m_pdf');
 		$this->m_pdf->pdf->WriteHTML($html);
 		$this->m_pdf->pdf->Output($pdfFilePath);
-		for($i = 0; $i < count($nama); $i++) {
+		for ($i = 0; $i < count($nama); $i++) {
 			$simpan = array(
 				'kd_tiket' => $tiket[$i],
 				'kd_order' => $id,
@@ -79,16 +85,17 @@ class Order extends CI_Controller {
 
 	}
 	/* Log on to codeastro.com for more projects */
-	public function kirimemail($id = '') {
-		$data['cetak'] = $this->db->query("SELECT * FROM tbl_order LEFT JOIN tbl_jadwal on tbl_order.kd_jadwal = tbl_jadwal.kd_jadwal LEFT JOIN tbl_tujuan on tbl_jadwal.kd_tujuan = tbl_tujuan.kd_tujuan WHERE kd_order ='".$id."'")->result_array();
+	public function kirimemail($id = '')
+	{
+		$data['cetak'] = $this->db->query("SELECT * FROM tbl_order LEFT JOIN tbl_jadwal on tbl_order.kd_jadwal = tbl_jadwal.kd_jadwal LEFT JOIN tbl_tujuan on tbl_jadwal.kd_tujuan = tbl_tujuan.kd_tujuan WHERE kd_order ='" . $id . "'")->result_array();
 		$asal = $data['cetak'][0]['asal_order'];
 		$kodeplg = $data['cetak'][0]['kd_pelanggan'];
 		$data['asal'] = $this->db->query("SELECT * FROM tbl_tujuan WHERE kd_tujuan ='$asal'")->row_array();
 		$pelanggan = $this->db->query("SELECT email_pelanggan FROM tbl_pelanggan WHERE kd_pelanggan ='$kodeplg'")->row_array();
 		//email
-		$subject = 'E-ticket - Order ID '.$id.' - '.date('dmY');
+		$subject = 'E-ticket - Order ID ' . $id . ' - ' . date('dmY');
 		$message = $this->load->view('frontend/cetaktiket', $data, TRUE);
-		$attach = base_url("assets/backend/upload/etiket/".$id.".pdf");
+		$attach = base_url("assets/backend/upload/etiket/" . $id . ".pdf");
 		$to = $pelanggan['email_pelanggan'];
 		$config = array(
 			'mailtype' => 'html',
@@ -108,12 +115,12 @@ class Order extends CI_Controller {
 		$this->email->attach($attach);
 		$this->email->subject($subject);
 		$this->email->message($message);
-		if($this->email->send()) {
+		if ($this->email->send()) {
 			$this->session->set_flashdata('message', 'swal("Succeed", "E-Ticket sent!", "success");');
-			redirect('backend/order/vieworder/'.$id);
+			redirect('backend/order/vieworder/' . $id);
 		} else {
 			$this->session->set_flashdata('message', 'swal("Failed", "E-Tickets Failed to Send Contact the IT Team", "error");');
-			redirect('backend/order/vieworder/'.$id);
+			redirect('backend/order/vieworder/' . $id);
 		}
 
 	}

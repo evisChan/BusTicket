@@ -182,7 +182,7 @@ class Tiket extends CI_Controller
 			'charset' => 'utf-8',
 			'protocol' => 'smtp',
 			'smtp_host' => 'ssl://smtp.gmail.com',
-			'smtp_user' => 'demo@email.com',    // Ganti dengan email gmail kamu
+			'smtp_user' => 'evisigalingging124@email.com',    // Ganti dengan email gmail kamu
 			'smtp_pass' => 'P@$$\/\/0RD',      // Password gmail kamu
 			'smtp_port' => 465,
 		];

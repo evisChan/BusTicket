@@ -110,8 +110,8 @@
                 Jadwal Pesanan : <?php echo $cetak[0]['kd_jadwal']; ?></br>
                 tanggal : <?php echo $cetak[0]['tgl_beli_order']; ?></br>
                 pelanggan : <?php echo $cetak[0]['nama_order']; ?></br>
-                Jadwal : <?php echo hari_indo(date('N', strtotime($cetak[0]['tgl_berangkat_order']))).', '.tanggal_indo(date('Y-m-d', strtotime(''.$cetak[0]['tgl_berangkat_order'].''))); ?><br>
-                Waktu Keberangkatan : <?php echo date('H:i', strtotime($cetak[0]['jam_berangkat_jadwal'])).' To '.date('H:i', strtotime($cetak[0]['jam_tiba_jadwal'])) ?>
+                Jadwal : <?php echo hari_indo(date('N', strtotime($cetak[0]['tgl_berangkat_order']))) . ', ' . tanggal_indo(date('Y-m-d', strtotime('' . $cetak[0]['tgl_berangkat_order'] . ''))); ?><br>
+                Waktu Keberangkatan : <?php echo date('H:i', strtotime($cetak[0]['jam_berangkat_jadwal'])) . ' To ' . date('H:i', strtotime($cetak[0]['jam_tiba_jadwal'])) ?>
                 Berangkat Dari : <?php echo strtoupper($asal['kota_tujuan']); ?></br>
                 Tujuan: <?php echo strtoupper($cetak[0]['kota_tujuan']); ?>
             </pre>
@@ -130,7 +130,7 @@
             </tr>
         </thead>
         <tbody>
-            <?php foreach($cetak as $row) { ?>
+            <?php foreach ($cetak as $row) { ?>
                 <tr>
                     <td scope="row">
                         <?php echo $row['kd_tiket']; ?>
@@ -145,7 +145,7 @@
                         <?php echo $row['no_kursi_order']; ?>
                     </td>
                     <td align="left">
-                        <?php echo '$'.number_format(($row['harga_jadwal'])); ?>
+                        <?php echo 'Rp' . number_format(($row['harga_jadwal'])); ?>
                     </td>
                 <tr>
                 <?php } ?>
@@ -156,7 +156,7 @@
                 <td align="right">Total</td>
                 <td align="right" class="gray">
                     <?php $total = count($cetak) * $cetak[0]['harga_jadwal'];
-                    echo '$'.number_format(($total)); ?>
+                    echo 'Rp' . number_format(($total)); ?>
                 </td>
             </tr>
         </tfoot>
