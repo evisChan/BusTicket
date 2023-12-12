@@ -75,7 +75,7 @@
 										<h5 class="card-title">Photo Profile</h5>
 										<p><img src="<?php echo base_url($profile['img_pelanggan']) ?>" height="50"
 												width="50"></p>
-										<p><a href="<?php echo base_url('profile/changepassword/'.$profile['kd_pelanggan']) ?>"
+										<p><a href="<?php echo base_url('profile/changepassword/' . $profile['kd_pelanggan']) ?>"
 												class="btn btn-primary">ganti Password</a></p>
 										<p><button data-toggle="modal" data-target="#exampleModal"
 												class="btn btn-primary">Edit Akun</button></p>
@@ -104,13 +104,13 @@
 							<div class="row">
 								<div class="col-sm-14">
 									<div class="row form-group">
-										<label for="nama" class="control-label">ID card number</label>
+										<label for="nama" class="control-label">Nomor KTP</label>
 										<input type="text" class="form-control" name="ktp"
 											value="<?php echo $profile['no_ktp_pelanggan'] ?>">
 										<input type="hidden" name="kode" value="<?php echo $profile['kd_pelanggan'] ?>">
 									</div>
 									<div class="row form-group">
-										<label for="nama" class="control-label">Name</label>
+										<label for="nama" class="control-label">Nama</label>
 										<input type="text" class="form-control" name="nama"
 											value="<?php echo $profile['nama_pelanggan'] ?>">
 									</div>
@@ -120,17 +120,17 @@
 											value="<?php echo $profile['email_pelanggan'] ?>">
 									</div>
 									<div class="row form-group">
-										<label for="nama" class="control-label">Mobilenumber</label>
+										<label for="nama" class="control-label">Nomor Telpon</label>
 										<input type="text" class="form-control" name="hp"
 											value="<?php echo $profile['telpon_pelanggan'] ?>">
 									</div>
 									<div class="row form-group">
-										<label for="nama" class="control-label">Address</label>
+										<label for="nama" class="control-label">Alamat</label>
 										<input type="text" class="form-control" name="alamat"
 											value="<?php echo $profile['alamat_pelanggan'] ?>">
 									</div>
 									<div class="row form-group">
-										<label for="" class="control-label">Photo Profile</label>
+										<label for="" class="control-label">Foto Profile</label>
 										<img src="<?php echo base_url($profile['img_pelanggan']) ?>"
 											alt="<?php echo $this->session->userdata('ktp') ?>"
 											style="width:150px;height:150px"><input type="file" class="form-control"
@@ -141,8 +141,8 @@
 							</div>
 						</div>
 				</div>
-				<button class="btn btn-danger" data-dismiss="modal">Close</button>
-				<button type="submit" class="btn btn-primary">Save Changes</button>
+				<button class="btn btn-danger" data-dismiss="modal">Tutup</button>
+				<button type="submit" class="btn btn-primary">Simpan Perubahan</button>
 				</form>
 			</div>
 		</div>

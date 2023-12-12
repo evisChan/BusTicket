@@ -31,7 +31,7 @@
 			<div class="row height align-items-center justify-content-center">
 				<div class="col-lg-5">
 					<div class="card card-login mx-auto mt-10">
-						<div class="card-header">Change Your Password <br>
+						<div class="card-header">Ganti Password Anda<br>
 							<?php echo $this->session->userdata('resetemail'); ?>
 						</div>
 						<div class="card-body" align="left">
@@ -45,7 +45,7 @@
 										placeholder="Repeat Password">
 								</div>
 								<button class="btn btn-primary btn-user btn-block">
-									Change Password
+									Ganti Password
 								</button>
 							</form>
 						</div>

@@ -55,7 +55,7 @@
 									<label for="exampleInputEmail1">Asal</label>
 									<select name="asal" class="form-control js-example-basic-single" required>
 										<option value="" selected disabled="">Pilih Asal</option>
-										<?php foreach($asal as $row) { ?>
+										<?php foreach ($asal as $row) { ?>
 											<option value="<?php echo $row['kd_tujuan'] ?>">
 												<?php echo strtoupper($row['kota_tujuan']) ?>
 												- <br>
@@ -68,7 +68,7 @@
 									<label for="exampleInputEmail1">Tujuan</label>
 									<select name="tujuan" class="form-control js-example-basic-single">
 										<option value="" selected disabled="">Pilih Tujuan</option>
-										<?php foreach($tujuan as $row) { ?>
+										<?php foreach ($tujuan as $row) { ?>
 											<option value="<?php echo $row['kota_tujuan'] ?>">
 												<?php echo strtoupper($row['kota_tujuan']); ?>
 											</option>
@@ -95,7 +95,7 @@
 									</tr>
 								</thead>
 								<tbody>
-									<?php foreach($list as $value) { ?>
+									<?php foreach ($list as $value) { ?>
 										<tr>
 											<td style="text-align:center;vertical-align:middle">
 												<?php echo strtoupper($value['kota_tujuan']) ?>
@@ -119,13 +119,18 @@
 	<!-- js -->
 
 	<?php $this->load->view('frontend/include/base_js'); ?>
+	<!-- Add this script block before your existing script block -->
+	<script type="text/javascript">
+		var maxYear = 2023; // Set the maximum allowed year
+	</script>
 	<script type="text/javascript">
 		$(function () {
 			var date = new Date();
 			date.setDate(date.getDate());
 
 			$(".datepicker").datepicker({
-				startDate: date,
+				startDate: '2023-01-01',
+				endDate: '2024-12-31',
 				format: 'yyyy-mm-dd',
 				autoclose: true,
 				todayHighlight: true,

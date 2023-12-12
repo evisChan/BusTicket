@@ -51,12 +51,22 @@
 									<tbody>
 										<?php for ($i = 0; $i < count($jadwal); $i++) { ?>
 											<tr>
+
 												<td>
 													<?php echo strtoupper($asal['kota_tujuan']) . " - " . strtoupper($jadwal[$i]['kota_tujuan']) . " [" . $jadwal[$i]['kd_jadwal'] . "]"; ?>
 												</td>
 												<td>
 													<?php echo $jadwal[$i]['terminal_tujuan'] ?>
 												</td>
+												<!-- <td>
+													<?php
+													$formattedDate = tanggal_indo(date('Y-m-d', strtotime($tanggal)));
+													$dayName = hari_indo($dayNumber);
+													$formattedDate = tanggal_indo(date('Y-m-d', strtotime('' . $tanggal . '')));
+													$formattedTime = date('H:i', strtotime($jadwal[$i]['jam_berangkat_jadwal']));
+													echo $dayName . ', ' . $formattedDate . ', ' . $formattedTime;
+													?>
+												</td> -->
 												<td>
 													<?php echo hari_indo(date('N', strtotime($tanggal))) . ', ' . tanggal_indo(date('Y-m-d', strtotime('' . $tanggal . ''))) . ', ' . date('H:i', strtotime($jadwal[$i]['jam_berangkat_jadwal'])); ?>
 												</td>
@@ -80,6 +90,7 @@
 			</div>
 		</div>
 	</section>
+
 	<!-- Log on to codeastro.com for more projects -->
 	<!-- End banner Area -->
 	<!-- End Generic Start -->

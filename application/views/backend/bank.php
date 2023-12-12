@@ -91,9 +91,8 @@
 				<div class="modal-body">
 					<form action="<?= base_url() ?>backend/bank/tambahbank" method="post" enctype="multipart/form-data">
 						<div class="form-group">
-							<label class="">Nama Pelanggan</label>
-							<input type="text" class="form-control" name="nasabah" required
-								placeholder="Nama Pelanggan">
+							<label class="">Nama Nasabah</label>
+							<input type="text" class="form-control" name="nasabah" required placeholder="Nama Nasabah">
 						</div>
 						<div class="form-group">
 							<label class="">Nama Bank</label>
@@ -109,7 +108,7 @@
 							<input type="file" class="form-control" name="userfile" required="">
 						</div>
 						<div class="modal-footer">
-							<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Tutup</button>
 							<button class="btn btn-success">Simpan</button>
 						</div>
 					</form>

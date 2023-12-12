@@ -41,7 +41,7 @@
       <?php if ($this->session->userdata('level') == '1') { ?>
         <a class="nav-link" href="<?= base_url() ?>backend/bank">
           <i class="fas fa fa-piggy-bank"></i>
-          <span>Daftar Bank</span></a>
+          <span>Manajemen Bank</span></a>
         <a class="nav-link" href="<?= base_url() ?>backend/laporan">
           <i class="fa fa fa-file"></i>
           <span>Laporan</span></a>

@@ -151,9 +151,9 @@
                 <a class="btn btn-primary float-right"
                   href="<?= base_url('assets/backend/upload/etiket/' . $row['kd_order'] . '.pdf') ?>" target="_blank"> Print
                   E-Ticket</a>
-                <a class="btn btn-primary float-right"
+                <!-- <a class="btn btn-primary float-right"
                   href="<?= base_url('backend/order/kirimemail/' . $row['kd_order']) ?>">
-                  Send E-Ticket</a>
+                  Send E-Ticket</a> -->
             <?php } ?>
           </div>
       </div>

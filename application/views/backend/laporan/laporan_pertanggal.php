@@ -94,7 +94,7 @@
         </table>
         <table align="center" style="width:800px; border:none;margin-top:5px;margin-bottom:20px;">
             <tr>
-                <td align="right">Jakarta,
+                <td align="right">Medan,
                     <?php echo date('d-M-Y') ?>
                 </td>
             </tr>

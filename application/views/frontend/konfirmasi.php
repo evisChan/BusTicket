@@ -52,11 +52,12 @@
 										<option value="Bank Mandiri">Bank Mandiri</option>
 										<option value="Bank BRI">Bank BRI</option>
 										<option value="Bank BNI">Bank BNI</option>
+										<option value="Bank SUMUT">Bank SUMUT</option>
 									</select>
 									<!-- Log on to codeastro.com for more projects -->
 									<!-- <select class="form-control" name="bank" required>
 											<option value="" selected disabled="">Select Bank</option>
-											<?php foreach($bank as $row) { ?>
+											<?php foreach ($bank as $row) { ?>
 											<option value="<?php echo $row['kd_bank'] ?>"><?php echo $row['nama_bank']; ?></option>
 											<?php } ?>
 										</select> -->

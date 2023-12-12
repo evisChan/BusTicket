@@ -60,10 +60,10 @@
 								<li>► Tanggal keberangkatan <b>
 										<?php echo nama_hari($tanggal) . "," . tgl_indo($tanggal) ?>
 									</b></li>
-								<li>► Waktu. keberangkatan <b>at
+								<li>► Waktu. keberangkatan <b>
 										<?php echo $jadwal['jam_berangkat_jadwal']; ?>
 									</b></li>
-								<li>► Waktu Sampai <b>at
+								<li>► Waktu Sampai <b>
 										<?php echo $jadwal['jam_tiba_jadwal']; ?>
 									</b></li>
 								<li>► Silakan pilih tempat duduk</li>

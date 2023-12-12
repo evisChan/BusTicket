@@ -20,24 +20,23 @@ class Order extends CI_Controller
 	}
 	public function index()
 	{
-		$data['title'] = "Daftar Pesanan";
+		$data['title'] = "List Order";
 		$data['order'] = $this->db->query("SELECT * FROM tbl_order group by kd_order")->result_array();
 		// die(print_r($data));
 		$this->load->view('backend/order', $data);
 	}
-	/* Log on to codeastro.com for more projects */
 	public function vieworder($id = '')
 	{
 		// die(print_r($_GET));
 		$cek = $this->input->get('order') . $id;
-		$sqlcek = $this->db->query("SELECT * FROM tbl_order LEFT JOIN tbl_jadwal on tbl_order.kd_jadwal = tbl_jadwal.kd_jadwal WHERE kd_order ='" . $cek . "' ")->result_array();
+		$sqlcek = $this->db->query("SELECT * FROM tbl_order LEFT JOIN tbl_jadwal on tbl_order.kd_jadwal = tbl_jadwal.kd_jadwal WHERE kd_order ='" . $cek . "'")->result_array();
 		if ($sqlcek) {
 			$data['tiket'] = $sqlcek;
-			$data['title'] = "View Bookings";
+			$data['title'] = "View Order";
 			// die(print_r($sqlcek));
 			$this->load->view('backend/view_order', $data);
 		} else {
-			$this->session->set_flashdata('message', 'swal("Empty", "No Order", "error");');
+			$this->session->set_flashdata('message', 'swal("Kosong", "Order Tidak Ada", "error");');
 			redirect('backend/tiket');
 		}
 	}
@@ -79,12 +78,11 @@ class Order extends CI_Controller
 			);
 			$this->db->insert('tbl_tiket', $simpan);
 		}
-		$this->session->set_flashdata('message', 'swal("Succeed", "Ticket Order Processed Successfully", "success");');
+		$this->session->set_flashdata('message', 'swal("Berhasil", "Tiket Order Berhasil Di Proses", "success");');
 		redirect('backend/order');
 
 
 	}
-	/* Log on to codeastro.com for more projects */
 	public function kirimemail($id = '')
 	{
 		$data['cetak'] = $this->db->query("SELECT * FROM tbl_order LEFT JOIN tbl_jadwal on tbl_order.kd_jadwal = tbl_jadwal.kd_jadwal LEFT JOIN tbl_tujuan on tbl_jadwal.kd_tujuan = tbl_tujuan.kd_tujuan WHERE kd_order ='" . $id . "'")->result_array();
@@ -101,10 +99,11 @@ class Order extends CI_Controller
 			'mailtype' => 'html',
 			'charset' => 'utf-8',
 			'protocol' => 'smtp',
-			'smtp_host' => 'ssl://smtp.gmail.com',
-			'smtp_user' => 'demo@email.com',    // Ganti dengan email gmail kamu
-			'smtp_pass' => 'P@$$\/\/0RD',      // Password gmail kamu
-			'smtp_port' => 465,
+			'protocol' => getenv('MAIL_DRIVER'),
+			'smtp_host' => getenv('MAIL_HOST'),
+			'smtp_user' => getenv('MAIL_USERNAME'), // Ganti dengan email gmail kamu
+			'smtp_pass' => getenv('MAIL_PASSWORD'),    // Password gmail kamu
+			'smtp_port' => getenv('MAIL_PORT'),
 			'crlf' => "rn",
 			'newline' => "rn"
 		);
@@ -116,17 +115,17 @@ class Order extends CI_Controller
 		$this->email->subject($subject);
 		$this->email->message($message);
 		if ($this->email->send()) {
-			$this->session->set_flashdata('message', 'swal("Succeed", "E-Ticket sent!", "success");');
+			$this->session->set_flashdata('message', 'swal("Berhasil", "E Tiket terkirim", "success");');
 			redirect('backend/order/vieworder/' . $id);
 		} else {
-			$this->session->set_flashdata('message', 'swal("Failed", "E-Tickets Failed to Send Contact the IT Team", "error");');
+			$this->session->set_flashdata('message', 'swal("Gagal", "E Tiket Gagal Di kirim Hubungi Team IT", "error");');
 			redirect('backend/order/vieworder/' . $id);
 		}
 
 	}
 
+
 }
 
 /* End of file Order.php */
-/* Log on to codeastro.com for more projects */
 /* Location: ./application/controllers/backend/Order.php */
